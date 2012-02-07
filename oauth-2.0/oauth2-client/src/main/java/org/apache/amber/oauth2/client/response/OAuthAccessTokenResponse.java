@@ -25,6 +25,9 @@ import org.apache.amber.oauth2.client.validator.TokenValidator;
 import org.apache.amber.oauth2.common.exception.OAuthProblemException;
 import org.apache.amber.oauth2.common.token.OAuthToken;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Maciej Machulak (m.p.machulak@ncl.ac.uk)
  * @author Lukasz Moren (lukasz.moren@ncl.ac.uk)
@@ -47,8 +50,8 @@ public abstract class OAuthAccessTokenResponse extends OAuthClientResponse {
     }
 
     @Override
-    protected void init(String body, String contentType, int responseCode) throws OAuthProblemException {
+    protected void init(String body, String contentType, int responseCode, Map<String, List<String>> responseHeaders) throws OAuthProblemException {
         validator = new TokenValidator();
-        super.init(body, contentType, responseCode);
+        super.init(body, contentType, responseCode, responseHeaders);
     }
 }

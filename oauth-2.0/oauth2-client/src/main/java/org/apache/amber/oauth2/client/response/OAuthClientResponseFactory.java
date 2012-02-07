@@ -26,6 +26,9 @@ import org.apache.amber.oauth2.common.exception.OAuthProblemException;
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.utils.OAuthUtils;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Maciej Machulak (m.p.machulak@ncl.ac.uk)
  * @author Lukasz Moren (lukasz.moren@ncl.ac.uk)
@@ -34,32 +37,32 @@ import org.apache.amber.oauth2.common.utils.OAuthUtils;
 public class OAuthClientResponseFactory {
 
     public static OAuthClientResponse createGitHubTokenResponse(String body, String contentType,
-                                                                int responseCode)
-        throws OAuthProblemException {
+                                                                int responseCode, Map<String, List<String>> responseHeaders)
+            throws OAuthProblemException {
         GitHubTokenResponse resp = new GitHubTokenResponse();
-        resp.init(body, contentType, responseCode);
+        resp.init(body, contentType, responseCode, responseHeaders);
         return resp;
     }
 
     public static OAuthClientResponse createJSONTokenResponse(String body, String contentType,
-                                                              int responseCode)
-        throws OAuthProblemException {
+                                                              int responseCode, Map<String, List<String>> responseHeaders)
+            throws OAuthProblemException {
         OAuthJSONAccessTokenResponse resp = new OAuthJSONAccessTokenResponse();
-        resp.init(body, contentType, responseCode);
+        resp.init(body, contentType, responseCode, responseHeaders);
         return resp;
     }
 
     public static <T extends OAuthClientResponse> T createCustomResponse(String body, String contentType,
-                                                                         int responseCode,
+                                                                         int responseCode, Map<String, List<String>> responseHeaders,
                                                                          Class<T> clazz)
-        throws OAuthSystemException, OAuthProblemException {
+            throws OAuthSystemException, OAuthProblemException {
 
-        OAuthClientResponse resp = (OAuthClientResponse)OAuthUtils
-            .instantiateClassWithParameters(clazz, null, null);
+        OAuthClientResponse resp = (OAuthClientResponse) OAuthUtils
+                .instantiateClassWithParameters(clazz, null, null);
 
-        resp.init(body, contentType, responseCode);
+        resp.init(body, contentType, responseCode, responseHeaders);
 
-        return (T)resp;
+        return (T) resp;
     }
 
 

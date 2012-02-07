@@ -46,7 +46,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             r = new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.VALID_JSON_RESPONSE,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
         } catch (OAuthProblemException e) {
             fail("Exception not expected");
         }
@@ -56,7 +56,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             r = new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.ERROR_JSON_BODY,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
             fail("Exception expected");
         } catch (OAuthProblemException e) {
             Assert.assertNotNull(e.getError());
@@ -70,7 +70,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             r = new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.VALID_JSON_RESPONSE,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
         } catch (OAuthProblemException e) {
             fail("Exception not expected");
         }
@@ -80,7 +80,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.ERROR_JSON_BODY,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
             fail("Exception expected");
         } catch (OAuthProblemException e) {
             Assert.assertNotNull(e.getError());
@@ -93,7 +93,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             r = new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.VALID_JSON_RESPONSE,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
         } catch (OAuthProblemException e) {
             fail("Exception not expected");
         }
@@ -103,7 +103,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.ERROR_JSON_BODY,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
             fail("Exception expected");
         } catch (OAuthProblemException e) {
             Assert.assertNotNull(e.getError());
@@ -117,7 +117,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             r = new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.VALID_JSON_RESPONSE,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
         } catch (OAuthProblemException e) {
             fail("Exception not expected");
         }
@@ -127,7 +127,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.ERROR_JSON_BODY,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
             fail("Exception expected");
         } catch (OAuthProblemException e) {
             Assert.assertNotNull(e.getError());
@@ -141,7 +141,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             r = new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.VALID_JSON_RESPONSE,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
         } catch (OAuthProblemException e) {
             fail("Exception not expected");
         }
@@ -155,7 +155,7 @@ public class OAuthJSONAccessTokenResponseTest extends Assert {
         try {
             new OAuthJSONAccessTokenResponse();
             r.init(TestUtils.ERROR_JSON_BODY,
-                OAuth.ContentType.JSON, 200);
+                    OAuth.ContentType.JSON, 200, null);
             fail("Exception expected");
         } catch (OAuthProblemException e) {
             Assert.assertEquals(OAuthError.TokenResponse.INVALID_REQUEST, e.getError());

@@ -21,6 +21,7 @@
 
 package org.apache.amber.oauth2.client.response;
 
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
@@ -114,6 +115,11 @@ public class OAuthAuthzResponse extends OAuthClientResponse {
 
     protected void setResponseCode(int responseCode) {
         this.responseCode = responseCode;
+    }
+
+    @Override
+    protected void setResponseHeaders(Map<String, List<String>> headers) {
+        this.responseHeaders = headers;
     }
 
 }

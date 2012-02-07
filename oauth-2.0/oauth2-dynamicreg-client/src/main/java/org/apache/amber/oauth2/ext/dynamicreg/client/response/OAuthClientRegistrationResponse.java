@@ -29,6 +29,9 @@ import org.apache.amber.oauth2.ext.dynamicreg.common.OAuthRegistration;
 import org.codehaus.jettison.json.JSONException;
 import org.apache.amber.oauth2.client.response.OAuthClientResponse;
 
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * @author Maciej Machulak (m.p.machulak@ncl.ac.uk)
@@ -41,9 +44,9 @@ public class OAuthClientRegistrationResponse extends OAuthClientResponse {
     }
 
     @Override
-    protected void init(String body, String contentType, int responseCode) throws OAuthProblemException {
+    protected void init(String body, String contentType, int responseCode, Map<String, List<String>> responseHeaders) throws OAuthProblemException {
         validator = new RegistrationValidator();
-        super.init(body, contentType, responseCode);
+        super.init(body, contentType, responseCode, responseHeaders);
     }
 
     @Override
@@ -57,7 +60,7 @@ public class OAuthClientRegistrationResponse extends OAuthClientResponse {
             parameters = JSONUtils.parseJSON(body);
         } catch (JSONException e) {
             throw OAuthProblemException.error(OAuthError.CodeResponse.UNSUPPORTED_RESPONSE_TYPE,
-                "Invalid response! Response body is not application/json encoded");
+                    "Invalid response! Response body is not application/json encoded");
         }
     }
 
@@ -83,6 +86,11 @@ public class OAuthClientRegistrationResponse extends OAuthClientResponse {
 
     public String getExpiresIn() {
         return parameters.get(OAuthRegistration.Response.EXPIRES_IN);
+    }
+
+    @Override
+    protected void setResponseHeaders(Map<String, List<String>> headers) {
+        this.responseHeaders = headers;
     }
 
 }

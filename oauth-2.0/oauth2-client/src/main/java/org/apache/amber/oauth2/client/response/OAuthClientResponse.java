@@ -22,6 +22,7 @@
 package org.apache.amber.oauth2.client.response;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.amber.oauth2.client.validator.OAuthClientValidator;
@@ -37,6 +38,7 @@ public abstract class OAuthClientResponse {
     protected String body;
     protected String contentType;
     protected int responseCode;
+    protected Map<String, List<String>> responseHeaders;
 
     protected OAuthClientValidator validator;
     protected Map<String, String> parameters = new HashMap<String, String>();
@@ -49,10 +51,13 @@ public abstract class OAuthClientResponse {
 
     protected abstract void setResponseCode(int responseCode);
 
-    protected void init(String body, String contentType, int responseCode) throws OAuthProblemException {
+    protected abstract void setResponseHeaders(Map<String, List<String>> headers);
+
+    protected void init(String body, String contentType, int responseCode, Map<String, List<String>> responseHeaders) throws OAuthProblemException {
         this.setBody(body);
         this.setContentType(contentType);
         this.setResponseCode(responseCode);
+        this.setResponseHeaders(responseHeaders);
         this.validate();
 
     }

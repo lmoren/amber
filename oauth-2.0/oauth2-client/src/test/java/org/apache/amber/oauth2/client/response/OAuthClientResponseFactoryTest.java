@@ -38,14 +38,14 @@ public class OAuthClientResponseFactoryTest {
     @Test
     public void testCreateGitHubTokenResponse() throws Exception {
         OAuthClientResponse gitHubTokenResponse = OAuthClientResponseFactory
-            .createGitHubTokenResponse("access_token=123", OAuth.ContentType.URL_ENCODED, 200);
+                .createGitHubTokenResponse("access_token=123", OAuth.ContentType.URL_ENCODED, 200, null);
         Assert.assertNotNull(gitHubTokenResponse);
     }
 
     @Test
     public void testCreateJSONTokenResponse() throws Exception {
         OAuthClientResponse jsonTokenResponse = OAuthClientResponseFactory
-            .createJSONTokenResponse("{'access_token':'123'}", OAuth.ContentType.JSON, 200);
+                .createJSONTokenResponse("{'access_token':'123'}", OAuth.ContentType.JSON, 200, null);
         Assert.assertNotNull(jsonTokenResponse);
     }
 

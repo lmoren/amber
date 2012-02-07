@@ -21,10 +21,13 @@
 
 package org.apache.amber.oauth2.client.response;
 
+import org.apache.amber.oauth2.common.OAuth;
 import org.apache.amber.oauth2.common.token.BasicOAuthToken;
 import org.apache.amber.oauth2.common.token.OAuthToken;
 import org.apache.amber.oauth2.common.utils.OAuthUtils;
-import org.apache.amber.oauth2.common.OAuth;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -66,6 +69,11 @@ public class GitHubTokenResponse extends OAuthAccessTokenResponse {
 
     protected void setResponseCode(int code) {
         this.responseCode = code;
+    }
+
+    @Override
+    protected void setResponseHeaders(Map<String, List<String>> headers) {
+        this.responseHeaders = headers;
     }
 
     public String getParam(String name) {

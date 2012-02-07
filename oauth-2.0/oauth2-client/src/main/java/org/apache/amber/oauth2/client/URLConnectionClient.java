@@ -28,6 +28,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.amber.oauth2.client.request.OAuthClientRequest;
@@ -53,18 +55,19 @@ public class URLConnectionClient implements HttpClient {
 
     public <T extends OAuthClientResponse> T execute(OAuthClientRequest request, Map<String, String> headers,
                                                      String requestMethod, Class<T> responseClass)
-        throws OAuthSystemException, OAuthProblemException {
+            throws OAuthSystemException, OAuthProblemException {
 
         String responseBody = null;
         URLConnection c = null;
         int responseCode = 0;
+        Map<String, List<String>> responseHeaders = new HashMap<String, List<String>>();
         try {
             URL url = new URL(request.getLocationUri());
 
             c = url.openConnection();
             responseCode = -1;
             if (c instanceof HttpURLConnection) {
-                HttpURLConnection httpURLConnection = (HttpURLConnection)c;
+                HttpURLConnection httpURLConnection = (HttpURLConnection) c;
 
                 if (headers != null && !headers.isEmpty()) {
                     for (Map.Entry<String, String> header : headers.entrySet()) {
@@ -97,13 +100,15 @@ public class URLConnectionClient implements HttpClient {
                 }
 
                 responseBody = OAuthUtils.saveStreamAsString(inputStream);
+
+                responseHeaders = httpURLConnection.getHeaderFields();
             }
         } catch (IOException e) {
             throw new OAuthSystemException(e);
         }
 
         return OAuthClientResponseFactory
-            .createCustomResponse(responseBody, c.getContentType(), responseCode, responseClass);
+                .createCustomResponse(responseBody, c.getContentType(), responseCode, responseHeaders, responseClass);
     }
 
     @Override

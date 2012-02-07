@@ -22,6 +22,9 @@
 package org.apache.amber.oauth2.httpclient4;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.amber.oauth2.client.HttpClient;
@@ -33,6 +36,7 @@ import org.apache.amber.oauth2.common.exception.OAuthProblemException;
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.utils.OAuthUtils;
 import org.apache.http.Header;
+import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -62,7 +66,7 @@ public class HttpClient4 implements HttpClient {
     public HttpClient4(org.apache.http.client.HttpClient client) {
         this.client = client;
     }
-    
+
     public void shutdown() {
         if (client != null) {
             ClientConnectionManager connectionManager = client.getConnectionManager();
@@ -76,7 +80,7 @@ public class HttpClient4 implements HttpClient {
                                                      Map<String, String> headers,
                                                      String requestMethod,
                                                      Class<T> responseClass)
-        throws OAuthSystemException, OAuthProblemException {
+            throws OAuthSystemException, OAuthProblemException {
 
         try {
             URI location = new URI(request.getLocationUri());
@@ -86,7 +90,7 @@ public class HttpClient4 implements HttpClient {
             if (!OAuthUtils.isEmpty(requestMethod) && OAuth.HttpMethod.POST.equals(requestMethod)) {
                 req = new HttpPost(location);
                 HttpEntity entity = new StringEntity(request.getBody());
-                ((HttpPost)req).setEntity(entity);
+                ((HttpPost) req).setEntity(entity);
             } else {
                 req = new HttpGet(location);
             }
@@ -107,12 +111,31 @@ public class HttpClient4 implements HttpClient {
                 contentType = contentTypeHeader.toString();
             }
 
+            Map<String, List<String>> responseHeaders = convertResponseHeadersToMap(response);
+
             return OAuthClientResponseFactory
-                .createCustomResponse(responseBody, contentType, response.getStatusLine().getStatusCode(),
-                    responseClass);
+                    .createCustomResponse(responseBody, contentType, response.getStatusLine().getStatusCode(), responseHeaders,
+                            responseClass);
         } catch (Exception e) {
             throw new OAuthSystemException(e);
         }
 
+    }
+
+    private Map<String, List<String>> convertResponseHeadersToMap(HttpResponse response) {
+        Header[] respHeaders = response.getAllHeaders();
+        Map<String, List<String>> responseHeaders = new HashMap<String, List<String>>();
+        if (respHeaders != null) {
+            for (Header respHeader : respHeaders) {
+                HeaderElement[] headerValues = respHeader.getElements();
+                List<String> responseHeaderValues = new ArrayList<String>();
+                for (HeaderElement headerValue : headerValues) {
+                    responseHeaderValues.add(headerValue.getValue());
+                }
+                responseHeaders.put(respHeader.getName(), responseHeaderValues);
+            }
+        }
+
+        return responseHeaders;
     }
 }

@@ -29,6 +29,9 @@ import org.apache.amber.oauth2.common.token.OAuthToken;
 import org.apache.amber.oauth2.common.utils.JSONUtils;
 import org.codehaus.jettison.json.JSONException;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Maciej Machulak (m.p.machulak@ncl.ac.uk)
  * @author Lukasz Moren (lukasz.moren@ncl.ac.uk)
@@ -68,7 +71,7 @@ public class OAuthJSONAccessTokenResponse extends OAuthAccessTokenResponse {
             parameters = JSONUtils.parseJSON(body);
         } catch (JSONException e) {
             throw OAuthProblemException.error(OAuthError.CodeResponse.UNSUPPORTED_RESPONSE_TYPE,
-                "Invalid response! Response body is not " + OAuth.ContentType.JSON + " encoded");
+                    "Invalid response! Response body is not " + OAuth.ContentType.JSON + " encoded");
         }
     }
 
@@ -83,6 +86,11 @@ public class OAuthJSONAccessTokenResponse extends OAuthAccessTokenResponse {
 
     public String getParam(String name) {
         return parameters.get(name);
+    }
+
+    @Override
+    protected void setResponseHeaders(Map<String, List<String>> headers) {
+        this.responseHeaders = headers;
     }
 
 }
