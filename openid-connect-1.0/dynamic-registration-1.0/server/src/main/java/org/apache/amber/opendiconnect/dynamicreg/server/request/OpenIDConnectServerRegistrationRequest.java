@@ -54,6 +54,8 @@ public class OpenIDConnectServerRegistrationRequest extends OAuthRequest {
         clientRegistrationInfo.setType(getType());
         clientRegistrationInfo.setLogoUrl(getLogoUrl());
         clientRegistrationInfo.setRedirectUris(getRedirectURIs());
+        clientRegistrationInfo.setClientId(getClientId());
+        clientRegistrationInfo.setClientSecret(getClientSecret());
     }
 
     @Override
