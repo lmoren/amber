@@ -55,9 +55,15 @@ public class OpenIDConnectServerRegistrationValidator extends AbstractValidator<
 
     @Override
     public void validateRequiredParameters(HttpServletRequest request) throws OAuthProblemException {
+        String type = request.getParameter(OpenIDConnect.DynamicClientRegistration.Request.OC_TYPE);
+
+        if (OpenIDConnect.DynamicClientRegistration.Request.Type.CLIENT_UPDATE.equals(type)) {
+            requiredParams.add(OpenIDConnect.DynamicClientRegistration.Request.OC_CLIENT_ID);
+            requiredParams.add(OpenIDConnect.DynamicClientRegistration.Request.OC_CLIENT_SECRET);
+        }
+
         super.validateRequiredParameters(request);
 
-        String type = request.getParameter(OpenIDConnect.DynamicClientRegistration.Request.OC_TYPE);
         if (!OpenIDConnect.DynamicClientRegistration.Request.Type.CLIENT_ASSOCIATE.equals(type)
                 && !OpenIDConnect.DynamicClientRegistration.Request.Type.CLIENT_UPDATE.equals(type)) {
             throw OAuthProblemException.error(OpenIDConnect.DynamicClientRegistration.Response.ERR_INVALID_TYPE)
