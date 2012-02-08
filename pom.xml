@@ -265,6 +265,16 @@
       <name>Apache Amber website</name>
       <url>scp://people.apache.org/www/incubator.apache.org/amber/</url>
     </site>
+      <repository>
+          <id>mxreleases</id>
+          <name>Internal Releases</name>
+          <url>http://dev.cloudidentity.co.uk/nexus/content/repositories/releases</url>
+      </repository>
+      <snapshotRepository>
+          <id>mxsnapshots</id>
+          <name>Internal Snapshots</name>
+          <url>http://dev.cloudidentity.co.uk/nexus/content/repositories/snapshots</url>
+      </snapshotRepository>
   </distributionManagement>
 
   <properties>
