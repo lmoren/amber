@@ -233,6 +233,7 @@
     <module>server</module>
     <module>oauth-1.0</module>
     <module>oauth-2.0</module>
+    <module>openid-connect-1.0</module>
   </modules>
 
   <scm>
@@ -247,17 +248,17 @@
   <ciManagement>
     <system>Jenkins</system>
     <url>https://builds.apache.org/job/Amber/</url>
-    <notifiers> 
-     <notifier> 
-       <type>mail</type> 
-       <sendOnError>true</sendOnError> 
-       <sendOnFailure>true</sendOnFailure> 
-       <sendOnSuccess>false</sendOnSuccess> 
-       <sendOnWarning>false</sendOnWarning> 
-       <configuration><address>amber-dev@incubator.apache.org</address></configuration> 
-     </notifier> 
+    <notifiers>
+     <notifier>
+       <type>mail</type>
+       <sendOnError>true</sendOnError>
+       <sendOnFailure>true</sendOnFailure>
+       <sendOnSuccess>false</sendOnSuccess>
+       <sendOnWarning>false</sendOnWarning>
+       <configuration><address>amber-dev@incubator.apache.org</address></configuration>
+     </notifier>
    </notifiers>
-  </ciManagement>  
+  </ciManagement>
   <distributionManagement>
     <site>
       <id>amber.website</id>

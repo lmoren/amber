@@ -80,4 +80,14 @@
     <bean id="resourceQueryEndpoint"
           class="org.apache.amber.oauth2.integration.endpoints.ResourceQueryEndpoint"/>
 
+    <!-- OpenID Connect Server -->
+    <jaxrs:server id="openidConnectServer" address="http://localhost:9004/openid_connect/">
+        <jaxrs:serviceBeans>
+            <ref bean="openIDConnectRegistrationEndpoint"/>
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+
+    <bean id="openIDConnectRegistrationEndpoint"
+          class="org.apache.amber.oauth2.integration.endpoints.OpenIDConnectRegistrationEndpoint">
+    </bean>
 </beans>

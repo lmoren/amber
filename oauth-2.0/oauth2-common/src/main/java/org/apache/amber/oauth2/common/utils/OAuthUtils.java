@@ -82,12 +82,12 @@ public final class OAuthUtils {
      * @return Translated string
      */
     public static String format(
-        final Collection<? extends Map.Entry<String, String>> parameters,
-        final String encoding) {
+            final Collection<? extends Map.Entry<String, String>> parameters,
+            final String encoding) {
         final StringBuilder result = new StringBuilder();
         for (final Map.Entry<String, String> parameter : parameters) {
             if (!OAuthUtils.isEmpty(parameter.getKey())
-                && !OAuthUtils.isEmpty(parameter.getValue())) {
+                    && !OAuthUtils.isEmpty(parameter.getValue())) {
                 final String encodedName = encode(parameter.getKey(), encoding);
                 final String value = parameter.getValue();
                 final String encodedValue = value != null ? encode(value, encoding) : "";
@@ -105,7 +105,7 @@ public final class OAuthUtils {
     private static String encode(final String content, final String encoding) {
         try {
             return URLEncoder.encode(content,
-                encoding != null ? encoding : "UTF-8");
+                    encoding != null ? encoding : "UTF-8");
         } catch (UnsupportedEncodingException problem) {
             throw new IllegalArgumentException(problem);
         }
@@ -133,7 +133,7 @@ public final class OAuthUtils {
      * @throws IOException              if an error occurs reading the input stream
      */
     public static String toString(
-        final InputStream is, final String defaultCharset) throws IOException {
+            final InputStream is, final String defaultCharset) throws IOException {
         if (is == null) {
             throw new IllegalArgumentException("InputStream may not be null");
         }
@@ -164,7 +164,7 @@ public final class OAuthUtils {
      */
     public static OAuthProblemException handleOAuthProblemException(String message) {
         return OAuthProblemException.error(OAuthError.TokenResponse.INVALID_REQUEST)
-            .description(message);
+                .description(message);
     }
 
     /**
@@ -186,12 +186,12 @@ public final class OAuthUtils {
 
     public static OAuthProblemException handleBadContentTypeException(String expectedContentType) {
         StringBuilder errorMsg = new StringBuilder("Bad request content type. Expecting: ").append(
-            expectedContentType);
+                expectedContentType);
         return handleOAuthProblemException(errorMsg.toString());
     }
 
     public static OAuthProblemException handleNotAllowedParametersOAuthException(
-        List<String> notAllowedParams) {
+            List<String> notAllowedParams) {
         StringBuffer sb = new StringBuffer("Not allowed parameters: ");
         if (notAllowedParams != null) {
             for (String notAllowed : notAllowedParams) {
@@ -270,9 +270,9 @@ public final class OAuthUtils {
         }
         try {
             return URLEncoder.encode(s, ENCODING)
-                // OAuth encodes some characters differently:
-                .replace("+", "%20").replace("*", "%2A")
-                .replace("%7E", "~");
+                    // OAuth encodes some characters differently:
+                    .replace("+", "%20").replace("*", "%2A")
+                    .replace("%7E", "~");
             // This could be done faster with more hand-crafted code.
         } catch (UnsupportedEncodingException wow) {
             throw new RuntimeException(wow.getMessage(), wow);
@@ -292,7 +292,7 @@ public final class OAuthUtils {
 
     public static <T> T instantiateClass(Class<T> clazz) throws OAuthSystemException {
         try {
-            return (T)clazz.newInstance();
+            return (T) clazz.newInstance();
         } catch (Exception e) {
             throw new OAuthSystemException(e);
         }
@@ -366,9 +366,12 @@ public final class OAuthUtils {
     /**
      * Construct a WWW-Authenticate or Authorization header with the OAuth challenge/credentials
      */
-    public static String encodeOAuthHeader(Map<String, String> entries) {
+    public static String encodeOAuthHeader(Map<String, String> entries, String headerName) {
+        if (isEmpty(headerName)) {
+            throw new IllegalArgumentException("headerName parameter cannot be null or empty");
+        }
         StringBuffer sb = new StringBuffer();
-        sb.append(OAuth.OAUTH_HEADER_NAME).append(" ");
+        sb.append(headerName).append(" ");
         for (Map.Entry<String, String> entry : entries.entrySet()) {
             if (!OAuthUtils.isEmpty(entry.getKey()) && !OAuthUtils.isEmpty(entry.getValue())) {
                 sb.append(entry.getKey());
@@ -379,6 +382,13 @@ public final class OAuthUtils {
         }
 
         return sb.substring(0, sb.length() - 1);
+    }
+
+    /**
+     * Construct a WWW-Authenticate or Authorization header with the OAuth challenge/credentials
+     */
+    public static String encodeOAuthHeader(Map<String, String> entries) {
+        return encodeOAuthHeader(entries, OAuth.OAUTH_HEADER_NAME);
     }
 
     public static boolean isEmpty(String value) {
@@ -460,6 +470,22 @@ public final class OAuthUtils {
         return false;
     }
 
+    public static OAuthProblemException mapOAuthHeaderToProblemException(String authenticationHeader) {
+        if (isEmpty(authenticationHeader)) {
+            throw new IllegalArgumentException("authenticationHeader cannot be empty");
+        }
+        Map<String, String> errorParameters = OAuthUtils.decodeOAuthHeader(authenticationHeader);
+        OAuthProblemException oAuthProblemException = null;
+        if (errorParameters != null) {
+            String error = errorParameters.get(OAuthError.OAUTH_ERROR);
+            String description = errorParameters.get(OAuthError.OAUTH_ERROR_DESCRIPTION);
+            String uri = errorParameters.get(OAuthError.OAUTH_ERROR_URI);
+
+            oAuthProblemException = OAuthProblemException.error(error).description(description).uri(uri);
+        }
+
+        return oAuthProblemException;
+    }
 }
 
 

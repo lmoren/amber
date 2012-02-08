@@ -99,7 +99,9 @@ public class URLConnectionClient implements HttpClient {
                     inputStream = httpURLConnection.getInputStream();
                 }
 
-                responseBody = OAuthUtils.saveStreamAsString(inputStream);
+                if (inputStream != null) {
+                    responseBody = OAuthUtils.saveStreamAsString(inputStream);
+                }
 
                 responseHeaders = httpURLConnection.getHeaderFields();
             }

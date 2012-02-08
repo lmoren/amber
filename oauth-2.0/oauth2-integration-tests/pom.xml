@@ -72,6 +72,18 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.amber</groupId>
+      <artifactId>openid-connect-dynamic-reg-client-1.0</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.amber</groupId>
+      <artifactId>openid-connect-dynamic-reg-server-1.0</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-frontend-jaxrs</artifactId>
       <version>${cxf.version}</version>
