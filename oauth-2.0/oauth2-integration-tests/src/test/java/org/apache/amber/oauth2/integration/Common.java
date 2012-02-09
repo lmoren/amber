@@ -54,9 +54,9 @@ public final class Common {
         + OAUTH_VERSION_2_INSUFFICIENT;
 
     public static final String AUTHORIZATION_HEADER_OAUTH1 = "OAuth " + OAUTH_VERSION_1;
-    public static final String AUTHORIZATION_HEADER_OAUTH2 = "OAuth " + OAUTH_VERSION_2;
-    public static final String AUTHORIZATION_HEADER_OAUTH2_EXPIRED = "OAuth " + OAUTH_VERSION_2_EXPIRED;
-    public static final String AUTHORIZATION_HEADER_OAUTH2_INSUFFICIENT = "OAuth "
+    public static final String AUTHORIZATION_HEADER_OAUTH2 = "Bearer " + OAUTH_VERSION_2;
+    public static final String AUTHORIZATION_HEADER_OAUTH2_EXPIRED = "Bearer " + OAUTH_VERSION_2_EXPIRED;
+    public static final String AUTHORIZATION_HEADER_OAUTH2_INSUFFICIENT = "Bearer "
         + OAUTH_VERSION_2_INSUFFICIENT;
 
     public static final String BODY_OAUTH1 = OAUTH_URL_ENCODED_VERSION_1;
