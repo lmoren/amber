@@ -30,7 +30,7 @@ public final class CommonExt {
     private CommonExt() {
     }
 
-    public static final String REGISTRATION_ENDPOINT = "http://localhost:9000/auth/oauth2ext/register";
+    public static final String REGISTRATION_ENDPOINT = "http://localhost:8999/auth/oauth2ext/register";
     public static final String APP_NAME = "Sample Application";
     public static final String APP_URL = "http://www.example.com";
     public static final String APP_ICON = "http://www.example.com/app.ico";

@@ -34,7 +34,7 @@
     <!--<import resource="classpath:META-INF/cxf/cxf-extension-xml.xml"/>-->
 
     <!--OAuth Authorization Server Extended - Client Registration -->
-    <jaxrs:server id="oauthServerExt" address="http://localhost:9000/auth/oauth2ext/">
+    <jaxrs:server id="oauthServerExt" address="http://localhost:8999/auth/oauth2ext/">
         <jaxrs:serviceBeans>
             <ref bean="registrationEndpoint"/>
         </jaxrs:serviceBeans>
